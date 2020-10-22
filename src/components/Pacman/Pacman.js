@@ -22,7 +22,6 @@ class Pacman extends Component {
     }
 
     handleKeyDown = (e) => {
-        console.log(e.keyCode, e.key);
 
         const currentTop = this.state.position.top;
         const currentLeft = this.state.position.left;

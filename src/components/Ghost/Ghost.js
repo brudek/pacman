@@ -4,36 +4,125 @@ import './style.css';
 
 
 class Ghost extends Component{
-
-    colors = ['red', 'pink', 'green', 'blue', 'black', 'white', 'purple', 'brown', 'yellow', 'silver', 'gold'];
-    
+ 
     state = {
-        direction: 'left',
+        direction: this.props.randomDirection,
         position: {
-            top: 100,
-            left: 100
+            top: this.props.randomTop,
+            left: this.props.randomLeft
         }
+    }
+
+    componentDidMount(){
+        setInterval( () => {
+            this.move();
+        }, 500);
+        
+    }
+
+    move = () => {
+
+        //TODO: refactor
+        const currentTop = this.state.position.top;
+        const currentLeft = this.state.position.left;
+        const {direction} = this.state;
+        const {step, size, border, topScoreBoardHeight} = this.props;
+        //zaokrąglanie do wielokrotności postaci
+        const boardHeight = Math.floor((window.innerHeight - border - topScoreBoardHeight - 2*size)/size)*size;
+        const boardWidth = Math.floor((window.innerWidth - border - size)/size)*size;
+        if(direction === 'up'){
+            if(this.state.direction === 'up'){
+                if(currentTop > 0){
+                    this.setState({
+                        position:{
+                            top: currentTop - step,
+                            left: currentLeft
+                        }
+                    })
+                }
+                else{
+                    this.changeDirection();
+                }
+            }
+            else{
+                this.setState({
+                    direction: 'up'
+                })
+            }
+        }
+        else if(direction === 'down'){
+            if(this.state.direction === 'down'){
+                if(this.state.position.top < boardHeight){
+                    this.setState({
+                        position:{
+                            top: currentTop + step,
+                            left: currentLeft
+                        }
+                    }); 
+                }
+                else{
+                    this.changeDirection();
+                }
+            }
+            else{
+                this.setState({
+                    direction: 'down'
+                })
+            }
+        } 
+        else if(direction === 'left'){
+            if(this.state.direction === 'left'){
+                if(this.state.position.left > 0){
+                    this.setState({
+                        position: {
+                            top: currentTop,
+                            left: currentLeft - step
+                        }
+                    })
+                }
+                else{
+                    this.changeDirection();
+                }
+            }
+            else{
+                this.setState({
+                    direction: 'left'
+                })
+            }
+        }
+        else if(direction === 'right'){
+            if(this.state.direction === 'right'){
+                if(this.state.position.left < boardWidth){
+                    this.setState({
+                        position: {
+                            top: currentTop,
+                            left: currentLeft + step
+                        }
+                    })
+                }
+                else{
+                    this.changeDirection();
+                }
+            }
+            else{
+                this.setState({
+                    direction: 'right'
+                })
+            }
+        } 
     }
 
     changeDirection = () => {
         const directions = ['up', 'down', 'left', 'right'];
         const movement = directions[Math.floor(Math.random() * directions.length)];
 
-        this.setState({ direction: movement }, () => {
-            console.log(this.state.direction);
-        });
+        this.setState({ direction: movement });   
     }
+
     render(){
-        const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
-        const {step, size, border, topScoreBoardHeight} = this.props;
-        const minStartDistance = 2*step;
-        const randomTop = Math.max(Math.floor(Math.random() * window.innerHeight - border - topScoreBoardHeight - size), minStartDistance);
-        const randomLeft = Math.max(Math.floor(Math.random() * window.innerWidth - border - size), minStartDistance);
         return(
-            <div 
-               className="ghost"
-               style={{top: randomTop, left: randomLeft}}>
-                <GhostSvg style={{'fill': randomColor}}/>
+            <div className="ghost" style={this.state.position}>
+                <GhostSvg style={{fill: this.props.color}}/>
             </div>
         )
     }
