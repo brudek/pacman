@@ -26,6 +26,12 @@ class Pacman extends Component {
 
         const currentTop = this.state.position.top;
         const currentLeft = this.state.position.left;
+        const {step} = this.props;
+        const {size} = this.props;
+        const {border} = this.props;
+        const {topScoreBoardHeight} = this.props;
+        const boardHeight = window.innerHeight - border - topScoreBoardHeight;
+        const boardWidth = window.innerWidth - border - size;
     
         // 39 ArrowRight
         // 40 ArrowDown
@@ -34,64 +40,90 @@ class Pacman extends Component {
 
         if(e.key === 'ArrowUp'){
             if(this.state.direction === 'up'){
-                this.setState({
-                    position:{
-                        top: currentTop - 20,
-                        left: currentLeft
-                    }
-                })
+                if(currentTop>0){
+                    this.setState({
+                        position:{
+                            top: currentTop - step,
+                            left: currentLeft
+                        }
+                    })
+                }
+                else{
+                    //TODO: play audio auć
+                    console.log('Auć!');
+                }
             }
             else{
                 this.setState({
                     direction: 'up'
                 })
             }
+            console.log(this.state.position.top);
            
         }
         else if(e.key === 'ArrowDown'){
             if(this.state.direction === 'down'){
-                this.setState({
-                    position:{
-                        top: currentTop + 20,
-                        left: currentLeft
-                    }
-                }) 
+                console.log(boardHeight);
+                if(this.state.position.top < boardHeight - size){
+                    this.setState({
+                        position:{
+                            top: currentTop + step,
+                            left: currentLeft
+                        }
+                    }); 
+                }
+                else{
+                    console.log('Auć!');
+                }
             }
             else{
                 this.setState({
                     direction: 'down'
                 })
             }
+            console.log(this.state.position.top);
         } 
         else if(e.key === 'ArrowLeft'){
             if(this.state.direction === 'left'){
-                this.setState({
-                    position: {
-                        top: currentTop,
-                        left: currentLeft - 20
-                    }
-                })
+                if(this.state.position.left > 0){
+                    this.setState({
+                        position: {
+                            top: currentTop,
+                            left: currentLeft - step
+                        }
+                    })
+                }
+                else{
+                    console.log('Auć!');
+                }
             }
             else{
                 this.setState({
                     direction: 'left'
                 })
             }
+            console.log(this.state.position.left);
         }
         else if(e.key === 'ArrowRight'){
             if(this.state.direction === 'right'){
-                this.setState({
-                    position: {
-                        top: currentTop,
-                        left: currentLeft + 20
-                    }
-                })
+                if(this.state.position.left < boardWidth){
+                    this.setState({
+                        position: {
+                            top: currentTop,
+                            left: currentLeft + step
+                        }
+                    })
+                }
+                else{
+                    console.log('Auć!');
+                }
             }
             else{
                 this.setState({
                     direction: 'right'
                 })
             }
+            console.log(this.state.position.left);
         } 
     }
 
@@ -115,8 +147,8 @@ Pacman.defaultProps = {
     size: 20, //Pacman size 20x20px
     step: 20, //20px
     // TODO: move to config
-    border: 10 * 2,
-    topScoreBoardHeigt: 50
+    border: 10*2,
+    topScoreBoardHeight: 50
 }
 
 export default Pacman;
