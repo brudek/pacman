@@ -58,8 +58,6 @@ class Pacman extends Component {
                     direction: 'up'
                 })
             }
-            console.log(this.state.position.top);
-           
         }
         else if(e.key === 'ArrowDown'){
             if(this.state.direction === 'down'){
@@ -81,7 +79,6 @@ class Pacman extends Component {
                     direction: 'down'
                 })
             }
-            console.log(this.state.position.top);
         } 
         else if(e.key === 'ArrowLeft'){
             if(this.state.direction === 'left'){
@@ -102,7 +99,6 @@ class Pacman extends Component {
                     direction: 'left'
                 })
             }
-            console.log(this.state.position.left);
         }
         else if(e.key === 'ArrowRight'){
             if(this.state.direction === 'right'){
@@ -123,7 +119,6 @@ class Pacman extends Component {
                     direction: 'right'
                 })
             }
-            console.log(this.state.position.left);
         } 
     }
 
