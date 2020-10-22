@@ -26,9 +26,9 @@ class Pacman extends Component {
         const currentTop = this.state.position.top;
         const currentLeft = this.state.position.left;
         const {step, size, border, topScoreBoardHeight} = this.props;
-        const boardHeight = window.innerHeight - border - topScoreBoardHeight -size;
-        const boardWidth = window.innerWidth - border - size;
-    
+        const boardHeight = Math.floor((window.innerHeight - border - topScoreBoardHeight - size)/size)*size;
+        const boardWidth = Math.floor((window.innerWidth - border - size)/size)*size;
+        console.log(boardHeight);
         // 39 ArrowRight
         // 40 ArrowDown
         // 37 ArrowLeft
@@ -57,7 +57,7 @@ class Pacman extends Component {
         }
         else if(e.key === 'ArrowDown'){
             if(this.state.direction === 'down'){
-                if(this.state.position.top < boardHeight){
+                if(this.state.position.top < boardHeight - size){
                     this.setState({
                         position:{
                             top: currentTop + step,

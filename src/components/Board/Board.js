@@ -2,11 +2,36 @@ import React, { Component } from 'react';
 
 import Pacman from '../Pacman';
 import Ghost from '../Ghost';
+import Food from '../Food';
 import './style.css';
 
 class Board extends Component {
 
     colors = ['red', 'pink', 'green', 'blue', 'black', 'white', 'purple', 'brown', 'yellow', 'silver', 'gold'];
+    
+    arrangeFood(){
+        let size = this.props.size;
+        let border = this.props.border;
+        let topScoreBoardHeight = this.props.topScoreBoardHeight;
+        
+        let i = window.innerWidth - border;
+        let foods = [];
+
+        while(i > 0){
+            if(i%size===0){
+                let j = window.innerHeight - border - topScoreBoardHeight - size;
+                while(j > 0){
+                    if(j%size===0){
+                        foods.push(<Food key={i+'-'+j} position={{left: i-size/2, top: j-size/2}} />);
+                    }
+                    j--;
+                }
+            }
+            i--;
+        }       
+        return foods;
+    }
+
 
     createGhosts(num){
         let i = 0;
@@ -35,7 +60,7 @@ class Board extends Component {
             <div className="board" style={{height: boardHeight}}>
                 <Pacman />
                 {this.createGhosts(ghostsNumber)}
-                {/* <Food /> */}
+                {this.arrangeFood()}
             </div>
         )
     }

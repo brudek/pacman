@@ -1,0 +1,13 @@
+.food{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+
+.food-dot{
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: yellow;
+}
