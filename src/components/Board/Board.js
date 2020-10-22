@@ -22,7 +22,8 @@ class Board extends Component {
                 let j = window.innerHeight - border - topScoreBoardHeight - size;
                 while(j > 0){
                     if(j%size===0){
-                        foods.push(<Food key={i+'-'+j} position={{left: i-size/2, top: j-size/2}} />);
+                        this[`food-${i}-${j}`] = React.createRef();
+                        foods.push(<Food key={`food-elem-'${i}-${j}`} position={{left: (i-size/2), top: (j-size/2)}} />);
                     }
                     j--;
                 }
