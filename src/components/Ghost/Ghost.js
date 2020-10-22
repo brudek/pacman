@@ -14,6 +14,15 @@ class Ghost extends Component{
             left: 100
         }
     }
+
+    changeDirection = () => {
+        const directions = ['up', 'down', 'left', 'right'];
+        const movement = directions[Math.floor(Math.random() * directions.length)];
+
+        this.setState({ direction: movement }, () => {
+            console.log(this.state.direction);
+        });
+    }
     render(){
         const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
         const {step, size, border, topScoreBoardHeight} = this.props;
